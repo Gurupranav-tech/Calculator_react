@@ -1,7 +1,10 @@
 import { FaBackspace } from "react-icons/fa";
-import AnimatedButton from "../components/AnimatedButton";
+import { MdFunctions } from "react-icons/md";
 import { useMemo, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { formatNumber } from "../utils/formatter";
+import AnimatedButton from "../components/AnimatedButton";
+import FunctionsModal from "../components/FunctionsModal";
 
 type Operator = "+" | "-" | "*" | "/" | "=" | "None";
 
@@ -67,138 +70,166 @@ export default function Calculator() {
     setNumberStr((prev) => prev + ".");
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${numberTyped}`);
+  };
+
   return (
-    <div className="calc-container">
-      <div className="results-container">
-        <div className="sub-result">{`${formatNumber(prevNumberType)} ${
-          operator !== "None" ? operator : ""
-        }`}</div>
-        <div className="main-result">{numberStr === "" ? "0" : numberStr}</div>
+    <>
+      <div className="calc-container">
+        <div className="results-container">
+          <div className="sub-result">{`${formatNumber(prevNumberType)} ${
+            operator !== "None" ? operator : ""
+          }`}</div>
+          <div className="main-result">
+            {numberStr === "" ? "0" : numberStr}
+          </div>
+        </div>
+        <div className="calc-btns-container">
+          <AnimatedButton
+            data-value="Ac"
+            className="calc-btn fn"
+            onClick={erase}
+          >
+            AC
+          </AnimatedButton>
+          <AnimatedButton
+            data-value="backspace"
+            className="calc-btn fn"
+            onClick={rmLdigit}
+          >
+            <FaBackspace />
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={operatorHandle("/")}
+            data-value="/"
+            className="calc-btn operator"
+          >
+            /
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={operatorHandle("*")}
+            className="calc-btn operator"
+            data-value="*"
+          >
+            *
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="7"
+            onClick={handleClick(7)}
+          >
+            7
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="8"
+            onClick={handleClick(8)}
+          >
+            8
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="9"
+            onClick={handleClick(9)}
+          >
+            9
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={operatorHandle("-")}
+            className="calc-btn operator"
+            data-value="-"
+          >
+            -
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="4"
+            onClick={handleClick(4)}
+          >
+            4
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="5"
+            onClick={handleClick(5)}
+          >
+            5
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="6"
+            onClick={handleClick(6)}
+          >
+            6
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={operatorHandle("+")}
+            className="calc-btn operator"
+            data-value="+"
+          >
+            +
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="1"
+            onClick={handleClick(1)}
+          >
+            1
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="2"
+            onClick={handleClick(2)}
+          >
+            2
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn"
+            data-value="3"
+            onClick={handleClick(3)}
+          >
+            3
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={operatorHandle("=")}
+            className="calc-btn two-row equal"
+            data-value="="
+          >
+            =
+          </AnimatedButton>
+          <AnimatedButton
+            className="calc-btn two-col"
+            data-value="0"
+            onClick={handleClick(0)}
+          >
+            0
+          </AnimatedButton>
+          <AnimatedButton
+            onClick={handleDecimal}
+            className="calc-btn"
+            data-value="."
+          >
+            .
+          </AnimatedButton>
+          <AnimatedButton
+            data-value="copy"
+            className="calc-btn two-col clipboard"
+            onClick={handleCopy}
+          >
+            Copy
+          </AnimatedButton>
+          <AnimatedButton
+            data-value="paste"
+            className="calc-btn two-col clipboard"
+          >
+            Functions <MdFunctions />
+          </AnimatedButton>
+        </div>
       </div>
-      <div className="calc-btns-container">
-        <AnimatedButton data-value="Ac" className="calc-btn fn" onClick={erase}>
-          AC
-        </AnimatedButton>
-        <AnimatedButton
-          data-value="backspace"
-          className="calc-btn fn"
-          onClick={rmLdigit}
-        >
-          <FaBackspace />
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={operatorHandle("/")}
-          data-value="/"
-          className="calc-btn operator"
-        >
-          /
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={operatorHandle("*")}
-          className="calc-btn operator"
-          data-value="*"
-        >
-          *
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="7"
-          onClick={handleClick(7)}
-        >
-          7
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="8"
-          onClick={handleClick(8)}
-        >
-          8
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="9"
-          onClick={handleClick(9)}
-        >
-          9
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={operatorHandle("-")}
-          className="calc-btn operator"
-          data-value="-"
-        >
-          -
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="4"
-          onClick={handleClick(4)}
-        >
-          4
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="5"
-          onClick={handleClick(5)}
-        >
-          5
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="6"
-          onClick={handleClick(6)}
-        >
-          6
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={operatorHandle("+")}
-          className="calc-btn operator"
-          data-value="+"
-        >
-          +
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="1"
-          onClick={handleClick(1)}
-        >
-          1
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="2"
-          onClick={handleClick(2)}
-        >
-          2
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn"
-          data-value="3"
-          onClick={handleClick(3)}
-        >
-          3
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={operatorHandle("=")}
-          className="calc-btn two-row equal"
-          data-value="="
-        >
-          =
-        </AnimatedButton>
-        <AnimatedButton
-          className="calc-btn two-col"
-          data-value="0"
-          onClick={handleClick(0)}
-        >
-          0
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={handleDecimal}
-          className="calc-btn"
-          data-value="."
-        >
-          .
-        </AnimatedButton>
-      </div>
-    </div>
+      <AnimatePresence>
+        <FunctionsModal />
+      </AnimatePresence>
+    </>
   );
 }
