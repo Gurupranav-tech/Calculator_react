@@ -1,28 +1,35 @@
 import { motion } from "framer-motion";
 import Backdrop from "./Backdrop";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import AnimatedButton from "./AnimatedButton";
 import { degreesToRadians, formatNumber } from "../utils/formatter";
 import { cos, cot, csc, sec, sin, tan } from "../utils/trig";
 import { toast } from "react-toastify";
+import { exp, ln } from "../utils/log";
 
 type Props = {
   onExit: () => void;
 };
 
-type SelectProps = "sin" | "cos" | "tan" | "sec" | "csc" | "cot";
+type SelectProps = "sin" | "cos" | "tan" | "sec" | "csc" | "cot" | "ln" | "exp";
 
 const trigFns = ["sin", "cos", "tan", "sec", "csc", "cot"];
 
 export default function FunctionsModalWindow({ onExit }: Props) {
   const [selectValue, setSelectedValue] = useState<SelectProps>("sin");
   const [angleType, setAngleType] = useState<"radians" | "degrees">("radians");
-  const [number, setNumber] = useState<number>(0);
+  const [change, setChange] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const number = useMemo(() => {
+    return +(inputRef.current?.value || 0);
+  }, [change]);
   const inputArg = useMemo(() => {
     if (!trigFns.find((p) => p === selectValue)) return number;
     if (angleType === "radians") return number;
     return degreesToRadians(number || 0);
-  }, [angleType, number]);
+  }, [angleType, number, selectValue]);
   const computed = formatNumber(
     useMemo(() => {
       switch (selectValue) {
@@ -38,6 +45,11 @@ export default function FunctionsModalWindow({ onExit }: Props) {
           return csc(inputArg);
         case "cot":
           return cot(inputArg);
+        case "ln":
+          if (inputArg === 0) return -Infinity;
+          return ln(inputArg);
+        case "exp":
+          return exp(inputArg);
         default:
           return 0;
       }
@@ -78,13 +90,15 @@ export default function FunctionsModalWindow({ onExit }: Props) {
             <option value="sec">sec</option>
             <option value="csc">csc</option>
             <option value="cot">cot</option>
+            <option value="ln">ln</option>
+            <option value="exp">exp</option>
           </select>
           <input
             type="number"
             name="input"
             id="input"
-            value={number === 0 ? "" : number}
-            onChange={(e) => setNumber(+e.target.value)}
+            ref={inputRef}
+            onChange={() => setChange((c) => !c)}
           />
         </div>
         <div className="functions-results-container">
@@ -94,13 +108,15 @@ export default function FunctionsModalWindow({ onExit }: Props) {
           </p>
         </div>
         <div className="functions-copypaste-btns">
-          <AnimatedButton
-            data-value="angle-type"
-            className="calc-btn equal copy"
-            onClick={toggleAngleMode}
-          >
-            Change to {angleType === "degrees" ? "RAD" : "DEG"}
-          </AnimatedButton>
+          {trigFns.find((p) => selectValue === p) && (
+            <AnimatedButton
+              data-value="angle-type"
+              className="calc-btn equal copy"
+              onClick={toggleAngleMode}
+            >
+              Change to {angleType === "degrees" ? "RAD" : "DEG"}
+            </AnimatedButton>
+          )}
           <AnimatedButton
             onClick={copy}
             data-value="copy"
