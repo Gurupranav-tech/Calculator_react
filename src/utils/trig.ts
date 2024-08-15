@@ -1,14 +1,14 @@
-import { PI } from './formatter'
+import { formatNumber, PI } from './formatter'
 
 const cache: Map<number, number> = new Map();
 
-function factorial(n: number): number {
+export function factorial(n: number): number {
   if (cache.has(n)) return cache.get(n) || 1;
   if (n <= 1) return 1;
   return n * factorial(n-1);
 }
 
-export default function pow(a: number, n: number) {
+export function pow(a: number, n: number) {
   let b=1;
   for (let i = 0; i < n; i++) b *= a;
   return b;
@@ -52,10 +52,22 @@ export function cos(n: number) {
   return val;
 }
 
-export function tan(n: number) { return sin(n) / cos(n); }
+export function tan(n: number) { 
+  if (formatNumber(cos(n)) === "0") return Infinity * sin(n);
 
-export function csc(n: number) { return 1 / sin(n); }
+  return sin(n) / cos(n); 
+}
+
+export function csc(n: number) { 
+  if (n === 0) return Infinity;
+  if (Number.isFinite(cot(n)))
+    return 1 / sin(n);
+  return Infinity * sin(n);
+}
 
 export function sec(n: number) { return 1 / cos(n); }
 
-export function cot(n: number) { return 1 / tan(n); }
+export function cot(n: number) { 
+  if (formatNumber(cos(n)) === "1" || formatNumber(cos(n)) === "-1") return Infinity * cos(n);
+  return 1 / tan(n);
+}
