@@ -29,6 +29,7 @@ export default function Calculator() {
   const [prevNumberType, setPrevNumberTyped] = useState<number>(0);
   const [operator, setOperator] = useState<Operator>("None");
   const [decimalAdded, setDecimalAdded] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleClick = (n: number) => () =>
     setNumberStr((prev) => prev + `${n}`);
@@ -222,13 +223,14 @@ export default function Calculator() {
           <AnimatedButton
             data-value="paste"
             className="calc-btn two-col clipboard"
+            onClick={() => setModalOpen(true)}
           >
             Functions <MdFunctions />
           </AnimatedButton>
         </div>
       </div>
       <AnimatePresence>
-        <FunctionsModal />
+        {modalOpen && <FunctionsModal onExit={() => setModalOpen(false)} />}
       </AnimatePresence>
     </>
   );

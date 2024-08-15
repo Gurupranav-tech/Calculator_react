@@ -200,3 +200,54 @@ body {
 .results-container > .sub-result {
   color: #818181;
 }
+
+.functions-container {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  min-width: 40rem;
+}
+
+.functions-header {
+  text-align: center;
+}
+
+.controls-container {
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.controls-container > select {
+  outline: none;
+  font-size: 1.2rem;
+  min-width: 5rem;
+  padding: 0.5rem;
+}
+
+.controls-container > input {
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.functions-results-container {
+  margin-top: 1rem;
+  color: black;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.functions-copypaste-btns {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calc-btn.equal.copy {
+  color: white;
+}
