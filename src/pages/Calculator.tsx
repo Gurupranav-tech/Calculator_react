@@ -1,10 +1,11 @@
-import { FaBackspace } from "react-icons/fa";
+import { FaBackspace, FaCopy, FaPaste } from "react-icons/fa";
 import { MdFunctions } from "react-icons/md";
 import { useMemo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { formatNumber } from "../utils/formatter";
 import AnimatedButton from "../components/AnimatedButton";
 import FunctionsModal from "../components/FunctionsModal";
+import { toast } from "react-toastify";
 
 type Operator = "+" | "-" | "*" | "/" | "=" | "None";
 
@@ -29,6 +30,7 @@ export default function Calculator() {
   const [prevNumberType, setPrevNumberTyped] = useState<number>(0);
   const [operator, setOperator] = useState<Operator>("None");
   const [decimalAdded, setDecimalAdded] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleClick = (n: number) => () =>
     setNumberStr((prev) => prev + `${n}`);
@@ -70,8 +72,20 @@ export default function Calculator() {
     setNumberStr((prev) => prev + ".");
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`${numberTyped}`);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(`${numberTyped}`);
+      toast.info("Copied!");
+    } catch {
+      toast.error("Error copying!");
+    }
+  };
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (!Number.isNaN(Number(text))) setNumberStr(text);
+    } catch {}
   };
 
   return (
@@ -82,7 +96,7 @@ export default function Calculator() {
             operator !== "None" ? operator : ""
           }`}</div>
           <div className="main-result">
-            {numberStr === "" ? "0" : numberStr}
+            {numberStr === "" ? "0" : formatNumber(+numberStr)}
           </div>
         </div>
         <div className="calc-btns-container">
@@ -214,21 +228,29 @@ export default function Calculator() {
           </AnimatedButton>
           <AnimatedButton
             data-value="copy"
-            className="calc-btn two-col clipboard"
+            className="calc-btn clipboard"
             onClick={handleCopy}
           >
-            Copy
+            <FaCopy />
+          </AnimatedButton>
+          <AnimatedButton
+            data-value="paste"
+            className="calc-btn clipboard"
+            onClick={handlePaste}
+          >
+            <FaPaste />
           </AnimatedButton>
           <AnimatedButton
             data-value="paste"
             className="calc-btn two-col clipboard"
+            onClick={() => setModalOpen(true)}
           >
             Functions <MdFunctions />
           </AnimatedButton>
         </div>
       </div>
       <AnimatePresence>
-        <FunctionsModal />
+        {modalOpen && <FunctionsModal onExit={() => setModalOpen(false)} />}
       </AnimatePresence>
     </>
   );
