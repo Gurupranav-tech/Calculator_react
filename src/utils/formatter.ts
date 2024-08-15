@@ -1,6 +1,8 @@
-const NumberFormatter  = new Intl.NumberFormat('en-US')
+const NumberFormatter  = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 10,
+})
 
-const PI: number = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899;
+export const PI: number = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899;
 
 export function formatNumber(number: number) {
   return NumberFormatter.format(number);
