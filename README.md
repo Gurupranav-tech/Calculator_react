@@ -1,5 +1,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/197a62e0-6c86-40e7-8d31-e632b2141345/deploy-status)](https://app.netlify.com/sites/react-scicalculator/deploys)
 
+# Live Link at (https://react-scicalculator.netlify.app/)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
