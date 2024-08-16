@@ -65,7 +65,10 @@ export function csc(n: number) {
   return Infinity * sin(n);
 }
 
-export function sec(n: number) { return 1 / cos(n); }
+export function sec(n: number) { 
+  if (formatNumber(sin(n)) === "1" || formatNumber(sin(n)) === "-1") return Infinity * sin(n);
+  return 1 / cos(n); 
+}
 
 export function cot(n: number) { 
   if (formatNumber(cos(n)) === "1" || formatNumber(cos(n)) === "-1") return Infinity * cos(n);
