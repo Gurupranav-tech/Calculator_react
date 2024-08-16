@@ -5,13 +5,22 @@ import AnimatedButton from "./AnimatedButton";
 import { degreesToRadians, formatNumber } from "../utils/formatter";
 import { cos, cot, csc, sec, sin, tan } from "../utils/trig";
 import { toast } from "react-toastify";
-import { exp, ln } from "../utils/log";
+import { exp, ln, sqrt } from "../utils/log";
 
 type Props = {
   onExit: () => void;
 };
 
-type SelectProps = "sin" | "cos" | "tan" | "sec" | "csc" | "cot" | "ln" | "exp";
+type SelectProps =
+  | "sin"
+  | "cos"
+  | "tan"
+  | "sec"
+  | "csc"
+  | "cot"
+  | "ln"
+  | "exp"
+  | "sqrt";
 
 const trigFns = ["sin", "cos", "tan", "sec", "csc", "cot"];
 
@@ -50,6 +59,8 @@ export default function FunctionsModalWindow({ onExit }: Props) {
           return ln(inputArg);
         case "exp":
           return exp(inputArg);
+        case "sqrt":
+          return sqrt(inputArg);
         default:
           return 0;
       }
@@ -92,6 +103,7 @@ export default function FunctionsModalWindow({ onExit }: Props) {
             <option value="cot">cot</option>
             <option value="ln">ln</option>
             <option value="exp">exp</option>
+            <option value="sqrt">sqrt</option>
           </select>
           <input
             type="number"
@@ -104,7 +116,11 @@ export default function FunctionsModalWindow({ onExit }: Props) {
         <div className="functions-results-container">
           <p>
             {selectValue}({number ? formatNumber(number) : 0}) ={" "}
-            {computed === "-0" || computed === "0" ? 0 : computed}
+            {computed === "-0" || computed === "0"
+              ? 0
+              : computed === "NaN"
+              ? "undefined"
+              : computed}
           </p>
         </div>
         <div className="functions-copypaste-btns">

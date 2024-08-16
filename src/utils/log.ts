@@ -3,6 +3,7 @@ import { factorial, pow } from "./trig";
 export const LN2 = 0.6931471805599453;
 
 export function ln(n: number) {
+  if (n < 0) return NaN;
   let iter = 0;
   while (n >= 1.8) {
     n /= 2;
@@ -27,4 +28,10 @@ export function exp(n: number) {
     val += pow(n, i) / factorial(i);
   }
   return val;
+}
+
+export function sqrt(n: number) {
+  if (n < 0) return NaN;
+  if (n == 0) return 0;
+  return exp(0.5 * ln(n));
 }
