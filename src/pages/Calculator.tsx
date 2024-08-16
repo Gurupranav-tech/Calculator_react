@@ -96,7 +96,7 @@ export default function Calculator() {
             operator !== "None" ? operator : ""
           }`}</div>
           <div className="main-result">
-            {numberStr === "" ? "0" : formatNumber(+numberStr)}
+            <p>{numberStr === "" ? "0" : numberStr.substring(0, 12)}</p>
           </div>
         </div>
         <div className="calc-btns-container">
