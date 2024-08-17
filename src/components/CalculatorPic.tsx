@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader } from "./Card";
 import CalcPic from "../assets/calculator.svg";
+import QuadPic from "../assets/quadsolver.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -32,7 +33,7 @@ export default function CalculatorPic() {
           <h3>Quadratic Equation Solver</h3>
         </CardHeader>
         <CardBody>
-          <img src={CalcPic} alt="Calculator Pic" className="home-calcimage" />
+          <img src={QuadPic} alt="Calculator Pic" className="home-calcimage" />
           <MyLink
             to="/quadsolver"
             className="btn"

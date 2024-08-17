@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { TbAlpha, TbBeta } from "react-icons/tb";
+import { IoMdArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import { sqrt } from "../utils/log";
 import { formatNumber } from "../utils/formatter";
+import AnimatedButton from "../components/AnimatedButton";
 
 export default function QuadraticEqnSolver() {
+  const navigate = useNavigate();
+
   const squaredRef = useRef<HTMLInputElement>(null);
   const linearRef = useRef<HTMLInputElement>(null);
   const constantRef = useRef<HTMLInputElement>(null);
@@ -76,7 +81,12 @@ export default function QuadraticEqnSolver() {
 
   return (
     <>
-      <motion.div className="quad-container">
+      <motion.div
+        className="quad-container"
+        initial={{ top: "-100vh" }}
+        animate={{ top: "50vh", transition: { type: "spring", delay: 0.25 } }}
+        exit={{ top: "100vh" }}
+      >
         <header>
           <h1>Quadratic Equation Solver</h1>
         </header>
@@ -105,6 +115,14 @@ export default function QuadraticEqnSolver() {
             <TbBeta />: {format(beta)}
           </div>
         </div>
+        <AnimatedButton
+          onClick={() => navigate("/")}
+          data-value="go-back"
+          className="calc-btn equal copy"
+        >
+          <IoMdArrowBack />
+          Go Back
+        </AnimatedButton>
       </motion.div>
     </>
   );
