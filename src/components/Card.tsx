@@ -7,9 +7,10 @@ type Props = {
 
 interface CardProps extends Props {
   dir?: "right" | "left";
+  click?: () => void;
 }
 
-export function Card({ children, dir = "left" }: CardProps) {
+export function Card({ children, dir = "left", click }: CardProps) {
   return (
     <motion.section
       whileHover={{ scale: 1.1 }}
@@ -20,6 +21,7 @@ export function Card({ children, dir = "left" }: CardProps) {
         left: "0vw",
         transition: { duration: 1, type: "spring", damping: 15 },
       }}
+      onClick={click}
     >
       {children}
     </motion.section>
