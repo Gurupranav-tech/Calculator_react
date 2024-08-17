@@ -274,3 +274,71 @@ body {
     width: 60%;
   }
 }
+
+.quad-container {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 3rem 1rem;
+  border-radius: 0.8rem;
+}
+
+.quad-container > header {
+  border-bottom: 1px solid black;
+}
+
+.quad-container .equation-input {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 1.4rem;
+}
+
+.equation-input .operator {
+  font-size: 1.2rem;
+  display: grid;
+  place-items: center;
+}
+
+.square, .linear, .constant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.equation-input  input {
+  display: inline;
+  border: none;
+  outline: 2px solid black;
+  --size: 40px;
+  width: var(--size);
+  height: calc(var(--size) / 2);
+  font-size: 1.2rem;
+  margin-right: 0.4rem;
+}
+
+.equation-input input::-webkit-inner-spin-button, .equation-input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.equation-input input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.quadres-container {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.alpha, .beta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
